@@ -1,5 +1,5 @@
 ```
-Can be deployed using Argo CD or directly.
+We will deploy these apps using Argo CD.
 ```
 #### How to deploy Argo CD?
 ```
@@ -18,7 +18,6 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 kubectl port-forward service/my-release-argocd-server -n argocd 8080:443
 ```
 
-
 ```
 Fecthing argocd helm chart using:
 helm pull argo/argo-cd --untar
@@ -26,7 +25,6 @@ helm pull argo/argo-cd --untar
 kubectl create ns argocd && kubens argocd && helm install -f argocd-chart/values.yaml my-argocd-test ./argocd-chart
 
 ```
-
 
 #### How to configure Argo CD?
 ```
