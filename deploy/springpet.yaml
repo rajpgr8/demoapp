@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: springpet
-        image: docker.io/66816681/spring-app
+        image: docker.io/66816681/spring-app   #custom image based on spring-petclinic 
         ports:
         - containerPort: 8080
 
