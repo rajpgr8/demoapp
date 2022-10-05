@@ -10,3 +10,7 @@ shuod see:
 2021-01-22T13:26:49.320Z INFO loggingexporter/logging_exporter.go:313 TracesExporter {"#spans": 2}
 2021-01-22T13:26:49.430Z INFO loggingexporter/logging_exporter.go:313 TracesExporter {"#spans": 1}
 ```
+
+```
+Also read: https://github.com/open-telemetry/opentelemetry-operator/
+```
