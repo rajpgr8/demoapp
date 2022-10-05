@@ -24,7 +24,7 @@ kubectl create ns argocd && kubens argocd && helm install -f argocd-chart/values
 kubectl port-forward svc/argo-cd-argocd-server 8080:443
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 
-Now login to the ArgoCD UI and create a application manually (OR manually apply file argocd_applications.yaml) 
+Now login to the ArgoCD UI and create a root application manually (OR apply file argocd_applications.yaml manually using kubctl) 
 Argocd will deploy all the menifiest present in the defined path.
 
 ```
