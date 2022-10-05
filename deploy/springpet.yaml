@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-app-deploy
+  name: springpet-deploy
   labels:
-    app: spring-app
+    app: springpet
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: spring-app
+      app: springpet
   template:
     metadata:
       labels:
-        app: spring-app
+        app: springpet
     spec:
       containers:
-      - name: spring-app
+      - name: springpet
         image: docker.io/66816681/spring-app
         ports:
         - containerPort: 8080
@@ -25,10 +25,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-app-svc
+  name: springpet-svc
 spec:
   selector:
-    app: spring-app
+    app: springpet
   ports:
     - targetPort: 8080
       port: 8080
