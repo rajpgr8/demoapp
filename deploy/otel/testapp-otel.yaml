@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: oteltestapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: myapp
+      app.kubernetes.io/name: oteltestapp
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: myapp
+        app.kubernetes.io/name: oteltestapp
     spec:
       containers:
-      - name: myapp
+      - name: oteltestapp
         image: quay.io/jpkroehling/generate-span-java:0.1.0
       - name: agent
         image: otel/opentelemetry-collector:0.18.0
