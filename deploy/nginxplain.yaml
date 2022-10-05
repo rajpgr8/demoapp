@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginxplain-deployment
+  name: nginxplain-deploy
   labels:
     app: nginxplain
 spec:
