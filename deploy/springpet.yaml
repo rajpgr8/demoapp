@@ -18,7 +18,7 @@ spec:
       - name: spring-app
         image: docker.io/66816681/spring-app
         ports:
-        - containerPort: 80
+        - containerPort: 8080
 
 ---
 
@@ -30,5 +30,5 @@ spec:
   selector:
     app: spring-app
   ports:
-    - targetPort: 80
-      port: 80
+    - targetPort: 8080
+      port: 8080
