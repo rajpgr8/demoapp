@@ -1,6 +1,3 @@
-```
-We will deploy these apps using Argo CD.
-```
 #### How to deploy Argo CD?
 ```
 kind create cluster &&
