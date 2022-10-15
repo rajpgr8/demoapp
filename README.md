@@ -29,15 +29,18 @@ Argocd will deploy all the menifiest present in the defined path.
 
 ```
 
-#### How to access apps?
+#### How to access deployed apps?
 ```
-kubectl port-forward service/nginx-service 8080:80
-http://127.0.0.1:8080/
+kubectl port-forward svc/springpet-svc  9090:9090
+kubectl port-forward svc/echo           8080:8080
+kubectl port-forward svc/nginx-svc      8081:8081
+kubectl port-forward svc/nginxplain-svc 8082:8082
 
-Similarly,
-kubectl port-forward svc/nginx-svc 8080:80
-kubectl port-forward svc/nginxplain-svc 8080:80
-kubectl port-forward svc/springpet-svc 8080:8081
-
-http://127.0.0.1:8080
+Then check:
+ http::127.0.0.1:9090
+ http::127.0.0.1:9090/actuator/health
+ http::127.0.0.1:9090/actuator/prometheus
+ http::127.0.0.1:8080
+ http::127.0.0.1:8081
+ http::127.0.0.1:8082
 ```
