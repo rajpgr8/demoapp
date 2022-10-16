@@ -31,11 +31,6 @@ data:
           receivers: [otlp]
           processors: [memory_limiter, batch]
           exporters: [logging]
-        metrics:
-          receivers: [otlp]
-          processors: [memory_limiter, batch]
-          exporters: [logging]
-
 ---
 apiVersion: v1
 kind: ConfigMap
