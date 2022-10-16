@@ -20,6 +20,11 @@ spec:
         image: docker.io/66816681/spring-app2   #custom image based on spring-petclinic 
         ports:
         - containerPort: 8080
+      env:
+      - name: OTEL_SERVICE_NAME
+        value: "springpet"
+      - name: OTEL_TRACES_EXPORTER
+        value: "zipkin"
 ---
 apiVersion: v1
 kind: Service
