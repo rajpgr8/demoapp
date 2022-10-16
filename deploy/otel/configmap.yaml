@@ -51,7 +51,7 @@ data:
       zpages: {}
     exporters:
       logging:
-        loglevel: debug
+        loglevel: info
       zipkin:
         endpoint: "http://somezipkin.target.com:9411/api/v2/spans" # Replace with a real endpoint.
       jaeger:
