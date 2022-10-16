@@ -11,13 +11,22 @@ data:
         protocols: 
           grpc:
     processors:
+      batch:
     exporters:
       logging:
     service:
       pipelines:
         traces:
           receivers: [otlp]
-          processors: []
+          processors: [batch]
+          exporters: [otlp, logging]
+        metrics:
+          receivers: [otlp, logging]
+          processors: [batch]
+          exporters: [otlp, logging]
+        logs:
+          receivers: [otlp, logging]
+          processors: [batch]
           exporters: [otlp, logging]
 ---
 apiVersion: v1
@@ -32,6 +41,7 @@ data:
         protocols: 
           grpc:
     processors:
+      batch:
     exporters:
       otlp:
         endpoint: "opentelemetrycollector.default.svc.cluster.local:4317"
@@ -40,5 +50,13 @@ data:
       pipelines:
         traces:
           receivers: [otlp]
-          processors: []
+          processors: [batch]
+          exporters: [otlp, logging]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [otlp, logging]
+        logs:
+          receivers: [otlp]
+          processors: [batch]
           exporters: [otlp, logging]
