@@ -51,7 +51,7 @@ data:
       zpages: {}
     exporters:
       logging:
-        loglevel: info
+        loglevel: debug
       zipkin:
         endpoint: "http://somezipkin.target.com:9411/api/v2/spans" # Replace with a real endpoint.
       jaeger:
@@ -69,7 +69,11 @@ data:
           processors: [memory_limiter, batch]
           exporters: [logging]
         metrics:
-          receivers: [otlp, hostmetrics]
+          receivers: [otlp, hostmetrics, prometheus]
+          processors: [batch]
+          exporters: [logging]
+        logs:
+          receivers: [otlp]
           processors: [batch]
           exporters: [logging]
 ---
