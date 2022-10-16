@@ -5,13 +5,20 @@ metadata:
   namespace: default
 spec:
   ports:
-  - name: grpc-otlp
+  - name: otlp # Default endpoint for OpenTelemetry receiver.
     port: 4317
     protocol: TCP
     targetPort: 4317
+  - name: jaeger-grpc # Default endpoint for Jaeger gRPC receiver
+    port: 14250
+  - name: jaeger-thrift-http # Default endpoint for Jaeger HTTP receiver.
+    port: 14268
+  - name: zipkin # Default endpoint for Zipkin receiver.
+    port: 9411
+  - name: metrics # Default endpoint for querying metrics.
+    port: 8888
   selector:
     app.kubernetes.io/name: opentelemetrycollector
-
 ---
 apiVersion: apps/v1
 kind: Deployment
