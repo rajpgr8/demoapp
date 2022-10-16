@@ -25,7 +25,6 @@ data:
       logging:
         loglevel: info
     service:
-      extensions: [health_check, zpages]
       pipelines:
         traces:
           receivers: [otlp]
