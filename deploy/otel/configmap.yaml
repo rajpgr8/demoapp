@@ -16,6 +16,26 @@ data:
           grpc:
           thrift_http:
       zipkin: {}
+      # Data sources: metrics
+      hostmetrics:
+        scrapers:
+          cpu:
+          disk:
+          filesystem:
+          load:
+          memory:
+          network:
+          process:
+          processes:
+          swap:
+      # Data sources: metrics
+      prometheus:
+        config:
+          scrape_configs:
+            - job_name: "opentelemetrycollector"
+              scrape_interval: 5s
+              static_configs:
+                - targets: ["localhost:8888"]
     processors:
       batch:
       memory_limiter:
