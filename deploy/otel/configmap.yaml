@@ -8,9 +8,8 @@ data:
   collector.yaml: |
     receivers:
       otlp:
-      protocols:
-        grpc:
-        http:
+        protocols:
+          grpc:
     processors:
       batch:
     exporters:
@@ -40,9 +39,8 @@ data:
   agent.yaml: |
     receivers:
       otlp:
-      protocols:
-        grpc:
-        http:
+        protocols:
+          grpc:
     processors:
       batch:
     exporters:
