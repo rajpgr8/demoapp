@@ -8,7 +8,7 @@ spec:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
   source:
-    path: deploy/otel2
+    path: deploy/otel
     repoURL: 'https://github.com/rajpgr8/demoapp.git'
     targetRevision: HEAD
   project: default
