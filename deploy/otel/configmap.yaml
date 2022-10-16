@@ -8,12 +8,14 @@ data:
   collector.yaml: |
     receivers:
       otlp:
-        protocols: 
-          grpc:
+      protocols:
+        grpc:
+        http:
     processors:
       batch:
     exporters:
       logging:
+        loglevel: info
     service:
       pipelines:
         traces:
@@ -38,11 +40,14 @@ data:
   agent.yaml: |
     receivers:
       otlp:
-        protocols: 
-          grpc:
+      protocols:
+        grpc:
+        http:
     processors:
       batch:
     exporters:
+      logging:
+        loglevel: info
       otlp:
         endpoint: "opentelemetrycollector.default.svc.cluster.local:4317"
         insecure: true
