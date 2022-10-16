@@ -10,6 +10,7 @@ data:
       otlp:
         protocols:
           grpc:
+          http:
     processors:
       batch:
       memory_limiter:
@@ -20,14 +21,11 @@ data:
         # 25% of limit up to 2G
         spike_limit_mib: 100
         check_interval: 5s
-    extensions:
-      health_check:
-      pprof:
-      zpages:
     exporters:
       logging:
         loglevel: info
     service:
+      extensions: [health_check, zpages]
       pipelines:
         traces:
           receivers: [otlp]
@@ -53,6 +51,7 @@ data:
       otlp:
         protocols:
           grpc:
+          http::
     processors:
     exporters:
       otlp:
