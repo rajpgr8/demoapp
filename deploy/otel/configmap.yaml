@@ -61,12 +61,16 @@ data:
       extensions: [health_check, zpages]
       pipelines:
         traces/1:
-          receivers: [otlp, zipkin, hostmetrics]
+          receivers: [otlp, zipkin]
           processors: [memory_limiter, batch]
           exporters: [logging]
         traces/2:
-          receivers: [otlp, jaeger, hostmetrics]
+          receivers: [otlp, jaeger]
           processors: [memory_limiter, batch]
+          exporters: [logging]
+        metrics:
+          receivers: [otlp, hostmetrics]
+          processors: [batch]
           exporters: [logging]
 ---
 apiVersion: v1
