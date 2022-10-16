@@ -1,3 +1,8 @@
+
+https://opentelemetry.io/docs/collector/configuration/  
+https://github.com/open-telemetry/opentelemetry-operator/  
+
+
 ```
 Can see traces/metrics for 'springpet' app.
 
@@ -60,5 +65,5 @@ Value: 2.000000
 ```
 
 ```
-Also read: https://github.com/open-telemetry/opentelemetry-operator/
+
 ```
