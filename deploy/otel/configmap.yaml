@@ -50,18 +50,7 @@ data:
         protocols:
           grpc:
     processors:
-      batch:
-      memory_limiter:
-        # Same as --mem-ballast-size-mib CLI argument
-        ballast_size_mib: 165
-        # 80% of maximum memory up to 2G
-        limit_mib: 400
-        # 25% of limit up to 2G
-        spike_limit_mib: 100
-        check_interval: 5s
     exporters:
-      logging:
-        loglevel: info
       otlp:
         endpoint: "opentelemetrycollector.default.svc.cluster.local:4317"
         insecure: true
@@ -69,13 +58,13 @@ data:
       pipelines:
         traces:
           receivers: [otlp]
-          processors: [memory_limiter, batch]
-          exporters: [otlp, logging]
+          processors: []
+          exporters: [otlp]
         metrics:
           receivers: [otlp]
-          processors: [memory_limiter, batch]
-          exporters: [otlp, logging]
+          processors: []
+          exporters: [otlp]
         logs:
           receivers: [otlp]
-          processors: [memory_limiter, batch]
-          exporters: [otlp, logging]
+          processors: []
+          exporters: [otlp]
