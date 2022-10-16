@@ -27,7 +27,7 @@ data:
           network:
           process:
           processes:
-          swap:
+
       # Data sources: metrics
       prometheus:
         config:
