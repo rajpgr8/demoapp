@@ -37,3 +37,54 @@ spec:
   ports:
     - targetPort: 8080
       port: 9090         
+
+==>>(OR)
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springpet-deploy
+  namespace: default
+  labels:
+    app: springpet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springpet
+  template:
+    metadata:
+      labels:
+        app: springpet
+    spec:
+      containers:
+      - name: springpet
+        image: docker.io/66816681/spring-app2   #custom image based on spring-petclinic 
+        ports:
+        - containerPort: 8080
+        env:
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://opentelemetrycollector.default:4317"
+        #- name: OTEL_EXPORTER_OTLP_ENDPOINT
+        #  value: "https://fb0cac128ff84c82be39ad4916fdceab.apm.us-central1.gcp.cloud.es.io:443"
+        #- name: OTEL_EXPORTER_OTLP_HEADERS
+        #  value: "Authorization=Bearer vc1rp1sRhhUyHDrrGR"
+        - name: OTEL_METRICS_EXPORTER
+          value: "otlp"
+        - name: OTEL_LOGS_EXPORTER
+          value: "otlp"
+        - name: OTEL_RESOURCE_ATTRIBUTES
+          value: "service.name=my-springapp,service.version=2.0,deployment.environment=dev"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springpet-svc
+  namespace: default
+spec:
+  selector:
+    app: springpet
+  ports:
+    - targetPort: 8080
+      port: 9090
