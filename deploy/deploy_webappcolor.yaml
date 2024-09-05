@@ -1,0 +1,50 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-color
+  namespace: default
+  labels:
+    app: webapp-color
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-color
+  template:
+    metadata:
+      labels:
+        app: webapp-color
+    spec:
+      containers:
+      - name: webapp-color
+        image: kodekloud/webapp-color
+        imagePullPolicy: Always
+        env:
+          - name: APP_COLOR
+            valueFrom:
+              configMapKeyRef:
+                name: app-color-cm
+                key: APP_COLOR
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-color-svc
+  namespace: default
+spec:
+  selector:
+    app: webapp-color
+  ports:
+    - targetPort: 8080
+      port: 8080 
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-color-cm
+  namespace: default
+data:
+  APP_COLOR: blue
