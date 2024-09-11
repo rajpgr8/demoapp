@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # kpt-merge: default/image-classifier-resnet50
+  name: image-classifier-resnet50
+  namespace: default
+  labels:
+    app: image-classifier
+    version: resnet50
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'apps|Deployment|default|image-classifier-resnet50'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-classifier
+      version: resnet50
+  template:
+    metadata:
+      labels:
+        app: image-classifier
+        version: resnet50
+    spec:
+      containers:
+      - name: tf-serving
+        image: "tensorflow/serving:2.8.0"
+        args:
+        - "--model_name=$(MODEL_NAME)"
+        - "--model_base_path=$(MODEL_PATH)"
+        envFrom:
+        - configMapRef:
+            name: resnet50-configs
+        imagePullPolicy: IfNotPresent
+        readinessProbe:
+          tcpSocket:
+            port: 8500
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 10
+        ports:
+        - name: http
+          containerPort: 8501
+          protocol: TCP
+        - name: grpc
+          containerPort: 8500
+          protocol: TCP
+        resources:
+          requests:
+            cpu: "3"
+            memory: 4Gi
+---
+apiVersion: v1
+kind: Service
+metadata: # kpt-merge: default/image-classifier
+  name: image-classifier
+  namespace: default
+  labels:
+    app: image-classifier
+    service: image-classifier
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Service|default|image-classifier'
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8500
+    protocol: TCP
+    name: tf-serving-grpc
+  - port: 8501
+    protocol: TCP
+    name: tf-serving-http
+  selector:
+    app: image-classifier
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: # kpt-merge: /resnet50-configs
+  name: resnet50-configs
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|resnet50-configs'
+data:
+  MODEL_NAME: image_classifier
+  MODEL_PATH: gs://test-1-435313-bucket/resnet_50  # GCS Bucket Path
+---
