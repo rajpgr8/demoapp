@@ -63,7 +63,7 @@ spec:
     - targetPort: 8080
       port: 8080 
 ---
-apiVersion: networking.istio.io/v1
+apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: webapp-color-gateway
@@ -78,12 +78,12 @@ spec:
     hosts:
     - "*"
 ---
-apiVersion: networking.istio.io/v1
+apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata: 
   name: webapp-color-route
 spec:
-  hosts: webapp-color-svc
+  hosts: ["*"]
   gateways:
   - webapp-color-gateway
   http:
@@ -106,7 +106,7 @@ kind: DestinationRule
 metadata: 
   name: webapp-color-destination
 spec:
-  host:  webapp-color-svc
+  host: "*"
   subsets:
   - name: webapp-color-v1
     labels:
