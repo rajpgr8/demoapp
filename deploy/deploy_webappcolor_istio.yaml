@@ -97,7 +97,7 @@ spec:
       weight: 50
     - destination:
         host: webapp-color-svc
-        subset: webapp-color-v1
+        subset: webapp-color-v2
         port:
           number: 8080
       weight: 50
