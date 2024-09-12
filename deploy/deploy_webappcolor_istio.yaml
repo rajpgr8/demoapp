@@ -116,3 +116,8 @@ spec:
     labels:
       version: v2
 ---
+#$ kubectl get svc istio-ingressgateway -n istio-system
+#NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)                                                                      AGE
+#istio-ingressgateway   LoadBalancer   34.118.239.135   35.204.33.90   15021:31215/TCP,80:32149/TCP,443:31760/TCP,15012:31691/TCP,15443:30857/TCP   28m
+
+#Test: curl http://35.204.33.90
