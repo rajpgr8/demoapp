@@ -2,10 +2,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-color
+  name: webapp-color-v1
   namespace: default
   labels:
     app: webapp-color
+    version: v1
 spec:
   replicas: 1
   selector:
@@ -28,10 +29,10 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-color
+  name: webapp-color-v2
   namespace: default
   labels:
-    app: webapp-color
+    version: v2
 spec:
   replicas: 1
   selector:
