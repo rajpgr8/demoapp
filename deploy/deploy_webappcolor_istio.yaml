@@ -15,7 +15,7 @@ spec:
     metadata:
       labels:
         app: webapp-color
-        level: v1
+        version: v1
     spec:
       containers:
       - name: webapp-color
@@ -41,7 +41,7 @@ spec:
     metadata:
       labels:
         app: webapp-color
-        level: v2
+        version: v2
     spec:
       containers:
       - name: webapp-color
@@ -77,11 +77,10 @@ spec:
       protocol: HTTP
     hosts:
     - "*"
-
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
-metadata: # kpt-merge: /image-classifier
+metadata: 
   name: webapp-color
 spec:
   hosts:
@@ -95,25 +94,25 @@ spec:
         subset: webapp-color-v1
         port:
           number: 8080
-      weight: 100
+      weight: 50
     - destination:
         host: webapp-color-svc
         subset: webapp-color-v2
         port:
           number: 8080
-      weight: 0
+      weight: 50
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
-metadata: # kpt-merge: /image-classifier
+metadata: 
   name: image-classifier
 spec:
   host: webapp-color-svc
   subsets:
   - name: webapp-color-v1
     labels:
-      level: v1
+      version: v1
   - name: webapp-color-v2
     labels:
-      level: v2
+      version: v2
 ---
