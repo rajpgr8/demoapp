@@ -63,7 +63,7 @@ spec:
     - targetPort: 8080
       port: 8080 
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
   name: webapp-color-gateway
@@ -72,19 +72,18 @@ spec:
     istio: ingressgateway # use istio default controller
   servers:
   - port:
-      number: 8080
+      number: 80
       name: http
       protocol: HTTP
     hosts:
     - "*"
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata: 
-  name: webapp-color
+  name: webapp-color-route
 spec:
-  hosts:
-  - "*"
+  hosts: webapp-color-svc
   gateways:
   - webapp-color-gateway
   http:
@@ -97,7 +96,7 @@ spec:
       weight: 50
     - destination:
         host: webapp-color-svc
-        subset: webapp-color-v2
+        subset: webapp-color-v1
         port:
           number: 8080
       weight: 50
@@ -105,9 +104,9 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata: 
-  name: image-classifier
+  name: webapp-color-destination
 spec:
-  host: webapp-color-svc
+  host:  webapp-color-svc
   subsets:
   - name: webapp-color-v1
     labels:
