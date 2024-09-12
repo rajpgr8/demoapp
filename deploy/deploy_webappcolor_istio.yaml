@@ -1,0 +1,119 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-color
+  namespace: default
+  labels:
+    app: webapp-color
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-color
+  template:
+    metadata:
+      labels:
+        app: webapp-color
+        level: v1
+    spec:
+      containers:
+      - name: webapp-color
+        image: kodekloud/webapp-color
+        imagePullPolicy: Always
+        env:
+          - name: APP_COLOR
+            value: green
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-color
+  namespace: default
+  labels:
+    app: webapp-color
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-color
+  template:
+    metadata:
+      labels:
+        app: webapp-color
+        level: v2
+    spec:
+      containers:
+      - name: webapp-color
+        image: kodekloud/webapp-color
+        imagePullPolicy: Always
+        env:
+          - name: APP_COLOR
+            value: blue
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-color-svc
+  namespace: default
+spec:
+  selector:
+    app: webapp-color
+  ports:
+    - targetPort: 8080
+      port: 8080 
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: webapp-color-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 8080
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata: # kpt-merge: /image-classifier
+  name: webapp-color
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - webapp-color-gateway
+  http:
+  - route:
+    - destination:
+        host: webapp-color-svc
+        subset: webapp-color-v1
+        port:
+          number: 8080
+      weight: 100
+    - destination:
+        host: webapp-color-svc
+        subset: webapp-color-v2
+        port:
+          number: 8080
+      weight: 0
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata: # kpt-merge: /image-classifier
+  name: image-classifier
+spec:
+  host: webapp-color-svc
+  subsets:
+  - name: webapp-color-v1
+    labels:
+      level: v1
+  - name: webapp-color-v2
+    labels:
+      level: v2
+---
